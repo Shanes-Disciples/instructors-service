@@ -50,7 +50,8 @@ npm install
 # API Routes
 | Route/Endpoint                    | Description                            | Method  |
 | --------------------------------- | -------------------------------------- | ------- |
-| /instructors/:id                  | Retrieve instructors and courses       | GET     |
-| /instructors/:id                  | Add new instructors and courses        | POST    |
-| /instructors/:id                  | Edit instructors and courses           | PUT     |
-| /instructors/:id                  | Remove instructors and courses         | DELETE  |
+| /courses/:id                      | Retrieve course by id                  | GET     |
+| /:id/instructors                  | Retrieve instructors by course id      | GET     |
+| /courses                          | Add new course                         | POST    |
+| /courses/:id                      | Edit course hours by id                | PUT     |
+| /courses/:id                      | Remove course by id                    | DELETE  |
