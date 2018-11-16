@@ -18,20 +18,15 @@
 
 Before seeding the database:
 
-mysql -u root -p [Enter password]
-create database inst;
+mysql -u root -p [Enter password] create database inst;
 
-To seed database:
-npm seed
+To seed database: node database/seed.js
 
-To start server:
-npm server-dev
+To start server: node server/index.js
 
-To build:
-npm react-dev
+To build: npm react-dev
 
-To test:
-npm test
+To test: npm test
 
 
 ## Requirements
@@ -52,3 +47,11 @@ npm install -g webpack
 npm install
 ```
 
+# API Routes
+| Route/Endpoint                    | Description                            | Method  |
+| --------------------------------- | -------------------------------------- | ------- |
+| /courses/:id                      | Retrieve course by id                  | GET     |
+| /:id/instructors                  | Retrieve instructors by course id      | GET     |
+| /courses                          | Add new course                         | POST    |
+| /courses/:id                      | Edit course hours by id                | PUT     |
+| /courses/:id                      | Remove course by id                    | DELETE  |

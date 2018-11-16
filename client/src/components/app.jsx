@@ -20,7 +20,7 @@ class App extends React.Component {
   }
 
   update() {
-    fetch(`/instructors/${this.state.courseId}`)
+    fetch(`/${this.state.courseId}/instructors`)
       .then(response => response.json())
       .then((data) => {
         this.setState({

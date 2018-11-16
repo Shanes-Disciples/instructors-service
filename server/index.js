@@ -5,8 +5,15 @@ const mysql = require('../database/sqlizeIndex.js');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '/../client/dist')));
-app.get('/instructors/:id', (req, res) => {
+app.use('/courses', express.static(path.join(__dirname, '/../client/dist')));
+
+//retrieve course by id
+app.get('/courses/:id', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
+});
+
+//retrieve instructors by course id
+app.get('/:id/instructors', (req, res) => {
   mysql.sequelize.authenticate()
     .then(function getInstructorIds() {
       return mysql.Join.findAll({ where: { course_id: req.params.id } });
@@ -15,7 +22,7 @@ app.get('/instructors/:id', (req, res) => {
     .then(function getAllInstructors(data) {
       const info = [];
       const promises = [];
-
+    
       data.forEach(function getSingleInstructor(inst) {
         const instructor = ({
           id: inst.dataValues.inst_id,
@@ -49,6 +56,37 @@ app.get('/instructors/:id', (req, res) => {
       return Promise.all(promises)
         .then(() => res.send(info));
     });
+});
+
+//Add new course
+app.post('/courses', (req, res) => {
+  newCourse = { course_name: 'new course', };
+  mysql.sequelize.authenticate()
+  .then(() => mysql.Courses.create(newCourse))
+  .then(() => res.end());
+});
+
+//Edit existing course hours by id
+app.put('/courses/:id', (req, res) => {
+  mysql.sequelize.authenticate()
+  .then(() => mysql.Courses.update({
+    num_hours: 999,
+  }, {
+    where: {id: req.params.id}
+  }))
+  .then(() => res.end());
+});
+
+
+//Remove course by id
+app.delete('/courses/:id', (req, res) => {
+  mysql.sequelize.authenticate()
+  .then(() => mysql.Courses.destroy({
+    where: {
+      id: req.params.id,
+    }
+  }))
+  .then(() => res.end());
 });
 
 app.listen(8081, () => {
