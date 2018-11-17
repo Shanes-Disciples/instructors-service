@@ -28,3 +28,8 @@ build/
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# tsv files
+courseData.tsv
+instructorData.tsv
+joinData.tsv

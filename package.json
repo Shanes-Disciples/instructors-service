@@ -10,7 +10,10 @@
     "seed": "node database/seed.js",
     "react-dev": "webpack -d --watch",
     "server-dev": "node server/index.js",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "cDataGen": "node database/dataScripts/courseDataGen.js",
+    "iDataGen": "node database/dataScripts/instDataGen.js",
+    "jDataGen": "node database/dataScripts/joinDataGen.js"
   },
   "babel": {
     "presets": [
@@ -39,6 +42,8 @@
     "mysql": "^2.16.0",
     "mysql2": "^1.6.1",
     "path": "^0.12.7",
+    "pg": "^7.6.1",
+    "pg-copy-streams": "^1.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
