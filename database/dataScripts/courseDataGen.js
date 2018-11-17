@@ -1,6 +1,6 @@
 const fs = require('fs');
 const faker = require('faker');
-const wstream = fs.createWriteStream('./courseData.tsv');
+const ws = fs.createWriteStream('./courseData.tsv');
 
 const courseDataGen = (index) => {
   for (let i = index; i <= 10 * Math.pow(10, 6); i++) {
@@ -13,12 +13,12 @@ const courseDataGen = (index) => {
     const disc_price = faker.random.number({min: 1.0, max: 100.0});
     const photo_url = faker.image.imageUrl();
 
-    if (!wstream.write(`${course_name}\t${rating}\t${reviews}\t${lectures}\t${num_hours}\t${full_price}\t${disc_price}\t${photo_url}\n`)) {
-      wstream.once('drain', () => { courseDataGen(i + 1); });
+    if (!ws.write(`${course_name}\t${rating}\t${reviews}\t${lectures}\t${num_hours}\t${full_price}\t${disc_price}\t${photo_url}\n`)) {
+      ws.once('drain', () => { courseDataGen(i + 1); });
       return;
     }
   }
-  wstream.end();
+  ws.end();
 };
 
 courseDataGen(1);
