@@ -29,7 +29,10 @@ build/
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
-# tsv files
+# tsv files for psql and mongodb
 courseData.tsv
+courseDataMDB.tsv
 instructorData.tsv
+instructorDataMDB.tsv
 joinData.tsv
+joinDataMDB.tsv
