@@ -9,7 +9,7 @@ const courseDataGen = (index) => {
     const reviews = Math.ceil(Math.random() * 1000);
     const lectures = Math.ceil(Math.random() * 100);
     const num_hours = faker.random.number({min: 1.0, max: 1000.00});
-    const full_price = Math.floor(Math.random() * 100000) / 100;
+    const full_price = faker.random.number({min: 1.0, max: 1000.00});
     const disc_price = faker.random.number({min: 1.0, max: 100.0});
     const photo_url = faker.image.imageUrl();
 
