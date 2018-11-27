@@ -1,0 +1,10 @@
+config:
+  target: "http://localhost:8081/courses"
+  phases:
+    - duration: 60
+      arrivalRate: 1000
+scenarios:
+  - name: "search courses"
+    flow:
+      - get:
+          url: "/{{$randomNumber(1, 10000000)}}"

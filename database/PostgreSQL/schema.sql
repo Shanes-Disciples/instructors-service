@@ -7,7 +7,7 @@ CREATE DATABASE udemy;
 CREATE TABLE IF NOT EXISTS courses (
   id SERIAL PRIMARY KEY,
   course_name VARCHAR(255) NOT NULL,
-  rating DECIMAL(2, 1) NOT NULL,
+  course_rating DECIMAL(2, 1) NOT NULL,
   reviews INT NOT NULL,
   lectures INT NOT NULL,
   num_hours INT NOT NULL,
@@ -35,9 +35,9 @@ CREATE TABLE IF NOT EXISTS joins (
 );
 
 
-\COPY courses (course_name, rating, reviews, lectures, num_hours, full_price, disc_price, photo_url) FROM './courseData.tsv' DELIMITER E'\t';
-\COPY instructors (inst_name, rating, reviews, students, title, blurb, courses, photo_url) FROM './instructorData.tsv' DELIMITER E'\t';
-\COPY joins (course_id, instructor_id) FROM './joinData.tsv' DELIMITER E'\t';
+-- \COPY courses (course_name, course_rating, reviews, lectures, num_hours, full_price, disc_price, photo_url) FROM './courseData.tsv' DELIMITER E'\t';
+-- \COPY instructors (inst_name, rating, reviews, students, title, blurb, courses, photo_url) FROM './instructorData.tsv' DELIMITER E'\t';
+-- \COPY joins (course_id, instructor_id) FROM './joinData.tsv' DELIMITER E'\t';
 
 
 

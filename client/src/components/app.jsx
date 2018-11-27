@@ -8,7 +8,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       instructors: null,
-      courseId: Math.random() * 100,
+      courseId: Math.floor(Math.random() * 10000000),
     };
     this.update = this.update.bind(this);
     this.renderInstructors = this.renderInstructors.bind(this);

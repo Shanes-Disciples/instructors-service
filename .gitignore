@@ -36,3 +36,6 @@ instructorData.tsv
 instructorDataMDB.tsv
 joinData.tsv
 joinDataMDB.tsv
+
+#stress testing
+newrelic.js

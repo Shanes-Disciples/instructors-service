@@ -1,7 +1,8 @@
 /* eslint-disable prefer-arrow-callback */
+require('newrelic');
 const express = require('express');
 const path = require('path');
-const mysql = require('../database/sqlizeIndex.js');
+const psql = require('../database/sqlizeIndex.js');
 
 const app = express();
 
@@ -14,9 +15,9 @@ app.get('/courses/:id', (req, res) => {
 
 //retrieve instructors by course id
 app.get('/:id/instructors', (req, res) => {
-  mysql.sequelize.authenticate()
+  psql.sequelize.authenticate()
     .then(function getInstructorIds() {
-      return mysql.Join.findAll({ where: { course_id: req.params.id } });
+      return psql.Join.findAll({ where: { course_id: req.params.id } });
     })
 
     .then(function getAllInstructors(data) {
@@ -25,19 +26,19 @@ app.get('/:id/instructors', (req, res) => {
     
       data.forEach(function getSingleInstructor(inst) {
         const instructor = ({
-          id: inst.dataValues.inst_id,
+          id: inst.dataValues.instructor_id,
           instInfo: null,
           courseInfo: null,
         });
-        const newPromise = mysql.Instructors.findOne({ where: { id: inst.dataValues.inst_id } })
+        const newPromise = psql.Instructors.findOne({ where: { id: inst.dataValues.instructor_id } })
 
           .then(function getInstructorInfo(instData) {
             instructor.instInfo = instData;
-            return mysql.Join.findAll({ where: { inst_id: inst.dataValues.inst_id } });
+            return psql.Join.findAll({ where: { instructor_id: inst.dataValues.instructor_id } });
           })
 
           .then(function getCourseInfo(courses) {
-            return mysql.Courses.findAll({
+            return psql.Courses.findAll({
               where: {
                 id: [courses
                   .map(course => course.course_id)
@@ -61,15 +62,15 @@ app.get('/:id/instructors', (req, res) => {
 //Add new course
 app.post('/courses', (req, res) => {
   newCourse = { course_name: 'new course', };
-  mysql.sequelize.authenticate()
-  .then(() => mysql.Courses.create(newCourse))
+  psql.sequelize.authenticate()
+  .then(() => psql.Courses.create(newCourse))
   .then(() => res.end());
 });
 
 //Edit existing course hours by id
 app.put('/courses/:id', (req, res) => {
-  mysql.sequelize.authenticate()
-  .then(() => mysql.Courses.update({
+  psql.sequelize.authenticate()
+  .then(() => psql.Courses.update({
     num_hours: 999,
   }, {
     where: {id: req.params.id}
@@ -80,8 +81,8 @@ app.put('/courses/:id', (req, res) => {
 
 //Remove course by id
 app.delete('/courses/:id', (req, res) => {
-  mysql.sequelize.authenticate()
-  .then(() => mysql.Courses.destroy({
+  psql.sequelize.authenticate()
+  .then(() => psql.Courses.destroy({
     where: {
       id: req.params.id,
     }

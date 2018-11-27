@@ -1,25 +1,25 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('inst', 'root', null, {
-  dialect: 'mysql',
+const sequelize = new Sequelize('postgres', 'czosa', null, {
+  dialect: 'postgres',
   host: 'localhost',
-  pool: { maxConnections: 5, maxIdleTime: 30 },
   language: 'en',
+  logging: false
 });
 
 const Instructors = sequelize.define('instructors', {
   id: {
-    type: Sequelize.INTEGER(6),
+    type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  inst_name: Sequelize.STRING(50),
+  inst_name: Sequelize.STRING(255),
   rating: Sequelize.DECIMAL(2, 1),
-  reviews: Sequelize.INTEGER(7),
-  students: Sequelize.INTEGER(8),
+  reviews: Sequelize.INTEGER,
+  students: Sequelize.INTEGER,
   title: Sequelize.STRING,
   blurb: Sequelize.TEXT,
-  courses: Sequelize.INTEGER(4),
+  courses: Sequelize.INTEGER,
   photo_url: Sequelize.STRING(255),
 }, {
   timestamps: false,
@@ -28,17 +28,17 @@ const Instructors = sequelize.define('instructors', {
 
 const Courses = sequelize.define('courses', {
   id: {
-    type: Sequelize.INTEGER(6),
+    type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
   course_name: Sequelize.STRING(255),
-  rating: Sequelize.DECIMAL(2, 1),
-  reviews: Sequelize.INTEGER(7),
-  lectures: Sequelize.INTEGER(4),
-  num_hours: Sequelize.INTEGER(4),
-  full_price: Sequelize.DECIMAL(6, 2),
-  disc_price: Sequelize.DECIMAL(6, 2),
+  course_rating: Sequelize.DECIMAL(2, 1),
+  reviews: Sequelize.INTEGER,
+  lectures: Sequelize.INTEGER,
+  num_hours: Sequelize.INTEGER,
+  full_price: Sequelize.INTEGER,
+  disc_price: Sequelize.INTEGER,
   photo_url: Sequelize.STRING(255),
 }, {
   timestamps: false,
@@ -46,14 +46,14 @@ const Courses = sequelize.define('courses', {
 });
 
 const Join = sequelize.define('joins', {
-  course_id: Sequelize.INTEGER(6),
-  inst_id: Sequelize.INTEGER(6),
+  course_id: Sequelize.INTEGER,
+  instructor_id: Sequelize.INTEGER,
 }, {
   timestamps: false,
   underscored: true,
 });
 
-Join.belongsTo(Instructors, { foreignKey: 'inst_id' });
+Join.belongsTo(Instructors, { foreignKey: 'instructor_id' });
 Join.belongsTo(Courses, { foreignKey: 'course_id' });
 
 module.exports = {
