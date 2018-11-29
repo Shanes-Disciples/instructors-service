@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('postgres', 'czosa', null, {
-  dialect: 'postgres',
+const sequelize = new Sequelize('inst', 'root', null, {
+  dialect: 'mysql',
   host: 'localhost',
+  pool: { maxConnections: 5, maxIdleTime: 30 },
   language: 'en',
-  logging: false
 });
 
 const Instructors = sequelize.define('instructors', {
@@ -17,8 +17,8 @@ const Instructors = sequelize.define('instructors', {
   rating: Sequelize.DECIMAL(2, 1),
   reviews: Sequelize.INTEGER,
   students: Sequelize.INTEGER,
-  title: Sequelize.STRING,
-  blurb: Sequelize.TEXT,
+  title: Sequelize.STRING(255),
+  blurb: Sequelize.STRING(255),
   courses: Sequelize.INTEGER,
   photo_url: Sequelize.STRING(255),
 }, {

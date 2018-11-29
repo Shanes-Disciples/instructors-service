@@ -7,7 +7,7 @@ const More = props => (
   <div className={styles.instructorCoursesContainer}>
     {props.info.courseInfo.length
       ? <div className={styles.instructorCoursesHeader}>
-        More Courses by {props.info.instInfo.inst_name}</div>
+        More Courses by {props.info.inst_name}</div>
       : null}
     {props.info.courseInfo
       .slice(0, 3)
@@ -22,11 +22,11 @@ More.propTypes = {
   info: PropTypes.shape({
     instInfo: PropTypes.shape({
       photo_url: PropTypes.string,
-      rating: PropTypes.string,
+      rating: PropTypes.number,
       reviews: PropTypes.number,
       students: PropTypes.number,
       courses: PropTypes.number,
-      inst_name: PropTypes.string,
+      name: PropTypes.string,
       title: PropTypes.string,
       blurb: PropTypes.string,
     }),
@@ -35,10 +35,10 @@ More.propTypes = {
       lectures: PropTypes.number,
       num_hours: PropTypes.number,
       course_name: PropTypes.string,
-      rating: PropTypes.string,
+      course_rating: PropTypes.string,
       reviews: PropTypes.number,
-      disc_price: PropTypes.string,
-      full_price: PropTypes.string,
+      disc_price: PropTypes.number,
+      full_price: PropTypes.number,
     })),
   }),
 };

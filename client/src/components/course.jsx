@@ -29,7 +29,7 @@ class Course extends React.Component {
     let hover;
     if (this.state.hover) {
       hover = (<div className={styles.hoverLayer}>
-        <img className={styles.instructorMiniPhoto} src={this.props.instInfo.photo_url}></img>
+        <img className={styles.instructorMiniPhoto} src={this.props.cInfo.photo_url}></img>
         <div className={styles.courseLectures}>{this.props.cInfo.lectures} lectures</div>
         <div className={styles.courseHours}>{this.props.cInfo.num_hours} hours video</div>
       </div>);
@@ -54,17 +54,17 @@ class Course extends React.Component {
 
         <div className={styles.courseTextSection}>
           <span className={styles.courseName}>{this.props.cInfo.course_name}</span>
-          <div className={styles.courseInstructor}>{this.props.instInfo.inst_name}</div>
+          <div className={styles.courseInstructor}>{this.props.cInfo.inst_name}</div>
 
           <div className={styles.courseStatsBar}>
             <img className={styles.emptyStars}
               src="https://s3.us-east-2.amazonaws.com/udemy-demo-tarik/emptyStars.png"></img>
-            <div className={styles.starsContainer} style={ { width: `${this.props.cInfo.rating * 15}px` } }>
+            <div className={styles.starsContainer} style={ { width: `${this.props.cInfo.course_rating * 15}px` } }>
               <img className={styles.fullStars}
                 src="https://s3.us-east-2.amazonaws.com/udemy-demo-tarik/filledStars.png"></img>
             </div>
-            <span className={styles.courseRating}>{this.props.cInfo.rating}</span>
-            <span className={styles.courseReviews}>({this.props.cInfo.reviews})</span>
+            <span className={styles.courseRating}>{this.props.course_rating}</span>
+            <span className={styles.courseReviews}>({this.props.reviews})</span>
           </div>
 
           <div className={styles.coursePriceBar}>
@@ -81,7 +81,7 @@ export default Course;
 Course.propTypes = {
   instInfo: PropTypes.shape({
     photo_url: PropTypes.string,
-    rating: PropTypes.string,
+    rating: PropTypes.number,
     reviews: PropTypes.number,
     students: PropTypes.number,
     courses: PropTypes.number,
@@ -94,9 +94,9 @@ Course.propTypes = {
     lectures: PropTypes.number,
     num_hours: PropTypes.number,
     course_name: PropTypes.string,
-    rating: PropTypes.string,
+    course_rating: PropTypes.string,
     reviews: PropTypes.number,
-    disc_price: PropTypes.string,
-    full_price: PropTypes.string,
+    disc_price: PropTypes.number,
+    full_price: PropTypes.number,
   }),
 };

@@ -44,10 +44,10 @@ class About extends React.Component {
     const rows = ['Instructor Rating', 'Reviews', 'Students', 'Courses'];
     return rows.map((title, i) => {
       const images = ['blackstar', 'chat', 'user', 'play'];
-      const stats = [addCommas(this.props.info.rating),
-        addCommas(this.props.info.reviews),
-        addCommas(this.props.info.students),
-        addCommas(this.props.info.courses)];
+      const stats = [addCommas(this.props.rating),
+        addCommas(this.props.reviews),
+        addCommas(this.props.students),
+        addCommas(this.props.courses)];
 
       return < Stat key={i} stat={stats[i]} text={title}
         image={`https://s3-us-west-1.amazonaws.com/u-demo/${images[i]}.png`} />;
@@ -58,7 +58,7 @@ class About extends React.Component {
     return (
       <div className={styles.instructor}>
         <div className={styles.infoPhoto}>
-          <img className={styles.instructorPhoto} src={this.props.info.photo_url}></img>
+          <img className={styles.instructorPhoto} src={this.props.photo_url}></img>
           <table className={styles.instructorInfo}>
             <tbody>
               {this.renderStats()}
@@ -67,10 +67,10 @@ class About extends React.Component {
         </div>
 
         <div className={styles.titleBlurb}>
-          <div className={styles.instructorName}>{this.props.info.inst_name}</div>
-          <div className={styles.instructorTitle}>{this.props.info.title}</div>
+          <div className={styles.instructorName}>{this.props.inst_name}</div>
+          <div className={styles.instructorTitle}>{this.props.title}</div>
           <div className={`${styles.instructorBlurb} ${styles[this.state.expand]}`}>
-              {this.props.info.blurb.split('\n').map((p, i) => <p key={i}>{p}</p>)}
+              
             <div className={`${styles.moreContainer} ${styles[this.state.box]}`}>
               <div className={styles.moreBlurb} onClick={this.handleClick}>+ See more</div>
             </div>
@@ -85,7 +85,7 @@ export default About;
 About.propTypes = {
   info: PropTypes.shape({
     photo_url: PropTypes.string,
-    rating: PropTypes.string,
+    rating: PropTypes.number,
     reviews: PropTypes.number,
     students: PropTypes.number,
     courses: PropTypes.number,

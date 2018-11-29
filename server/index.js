@@ -2,7 +2,17 @@
 require('newrelic');
 const express = require('express');
 const path = require('path');
-const psql = require('../database/sqlizeIndex.js');
+const pgp = require('pg-promise')();
+
+const config = {
+  user: 'czosa',
+  host: 'localhost',
+  database: 'postgres',
+  password: null,
+  port: 5432,
+};
+
+const db = pgp(config);
 
 const app = express();
 
@@ -15,80 +25,35 @@ app.get('/courses/:id', (req, res) => {
 
 //retrieve instructors by course id
 app.get('/:id/instructors', (req, res) => {
-  psql.sequelize.authenticate()
-    .then(function getInstructorIds() {
-      return psql.Join.findAll({ where: { course_id: req.params.id } });
-    })
-
-    .then(function getAllInstructors(data) {
-      const info = [];
-      const promises = [];
-    
-      data.forEach(function getSingleInstructor(inst) {
-        const instructor = ({
-          id: inst.dataValues.instructor_id,
-          instInfo: null,
-          courseInfo: null,
-        });
-        const newPromise = psql.Instructors.findOne({ where: { id: inst.dataValues.instructor_id } })
-
-          .then(function getInstructorInfo(instData) {
-            instructor.instInfo = instData;
-            return psql.Join.findAll({ where: { instructor_id: inst.dataValues.instructor_id } });
+  const instQuery = `SELECT * FROM instructors JOIN joins ON joins.instructor_id = instructors.id WHERE joins.course_id = ${req.params.id};`;
+  db.any(instQuery)
+    .then((response) => {
+      let result = [];
+      let count = 0;
+      response.map((row) => {
+        const courseQuery = `SELECT * FROM courses WHERE id = ${row.course_id};`;
+        db.query(courseQuery)
+          .then((respo) => {
+            count += 1;
+            let instWithCourses = Object.assign(row, { courseInfo: respo });
+            result.push(instWithCourses);
+            if (count === response.length) {
+              res.status(201);
+              res.send(result);
+            }
           })
-
-          .then(function getCourseInfo(courses) {
-            return psql.Courses.findAll({
-              where: {
-                id: [courses
-                  .map(course => course.course_id)
-                  .filter(c => c != req.params.id)],
-              },
-            });
-          })
-
-          .then(function pushInfo(courseData) {
-            instructor.courseInfo = courseData;
-            info.push(instructor);
+          .catch((error) => {
+            res.status(500);
+            res.send(error);
           });
-
-        promises.push(newPromise);
       });
-      return Promise.all(promises)
-        .then(() => res.send(info));
+    })
+    .catch((error) => {
+      res.status(500);
+      res.send(error);
     });
 });
 
-//Add new course
-app.post('/courses', (req, res) => {
-  newCourse = { course_name: 'new course', };
-  psql.sequelize.authenticate()
-  .then(() => psql.Courses.create(newCourse))
-  .then(() => res.end());
-});
-
-//Edit existing course hours by id
-app.put('/courses/:id', (req, res) => {
-  psql.sequelize.authenticate()
-  .then(() => psql.Courses.update({
-    num_hours: 999,
-  }, {
-    where: {id: req.params.id}
-  }))
-  .then(() => res.end());
-});
-
-
-//Remove course by id
-app.delete('/courses/:id', (req, res) => {
-  psql.sequelize.authenticate()
-  .then(() => psql.Courses.destroy({
-    where: {
-      id: req.params.id,
-    }
-  }))
-  .then(() => res.end());
-});
 
 app.listen(8081, () => {
   console.log("listening on port 8081");
