@@ -6,7 +6,7 @@ const pgp = require('pg-promise')();
 
 const config = {
   user: 'postgres',
-  host: 'ec2-18-204-217-172.compute-1.amazonaws.com',
+  host: 'ec2-100-24-4-176.compute-1.amazonaws.com',
   database: 'udemy',
   password: 'password',
   port: 5432,
