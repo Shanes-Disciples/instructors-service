@@ -5,10 +5,10 @@ const path = require('path');
 const pgp = require('pg-promise')();
 
 const config = {
-  user: 'postgres',
+  user: 'power_user',
   host: 'ec2-100-24-4-176.compute-1.amazonaws.com',
   database: 'udemy',
-  password: 'password',
+  password: 'power',
   port: 5432,
 };
 
