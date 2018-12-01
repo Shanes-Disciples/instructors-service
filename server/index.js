@@ -54,6 +54,9 @@ app.get('/:id/instructors', (req, res) => {
     });
 });
 
+app.get('/loaderio-fa1421282079f8c0e72e81fb0002ece1', (req, res) => {
+  res.send('loaderio-fa1421282079f8c0e72e81fb0002ece1');
+});
 
 app.listen(8081, () => {
   console.log("listening on port 8081");
